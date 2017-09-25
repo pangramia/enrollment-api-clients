@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.48.4"
+  version: "0.48.5"
   title: Enrollment API
   
 securityDefinitions:
@@ -428,7 +428,8 @@ definitions:
   RequestLineItem: 
     properties:
       value:
-        type: number
+        type: string
+        description: Basically we provide either number, or empty values here
       enrollLevel:
         type: number
         description: If the given request cell with the threshold value (e.g. 380) is passed well for enrollment (1 value), semipassed (0), or out of passing (-1). This may be used to colorize threshold tables, so each user may see if the given cell (with certain threshold value)  still pass enrollment minimal requirements.

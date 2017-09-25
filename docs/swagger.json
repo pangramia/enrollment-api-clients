@@ -1,0 +1,619 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "0.48.3",
+    "title" : "Enrollment API"
+  },
+  "host" : "api.pangramia.com",
+  "basePath" : "/enroll/v1",
+  "schemes" : [ "https" ],
+  "consumes" : [ "application/json" ],
+  "produces" : [ "application/json" ],
+  "security" : [ {
+    "APIKeyHeader" : [ ]
+  } ],
+  "paths" : {
+    "/" : {
+      "get" : {
+        "description" : "Returns  langs with default lang, regions with default region, and campaigns for default region. Everything is listed in default lang. This REST method is to speed-up js client communication.",
+        "operationId" : "defaults",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/DefaultsResponse"
+            }
+          },
+          "default" : {
+            "description" : "Error",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "x-swagger-router-controller" : "enrollment"
+    },
+    "/langs" : {
+      "get" : {
+        "description" : "Returns language list in which content is available",
+        "operationId" : "langs",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/LangsResponse"
+            }
+          },
+          "default" : {
+            "description" : "Error",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "x-swagger-router-controller" : "enrollment"
+    },
+    "/regions" : {
+      "get" : {
+        "description" : "Returns available regions (e.g. countries, universities)",
+        "operationId" : "regions",
+        "parameters" : [ {
+          "name" : "lang",
+          "in" : "query",
+          "description" : "Language to use in translated content",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/RegionsResponse"
+            }
+          },
+          "default" : {
+            "description" : "Error",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "x-swagger-router-controller" : "enrollment"
+    },
+    "/search/{region}" : {
+      "get" : {
+        "description" : "Returns available campaigns for a specific region",
+        "operationId" : "campaigns",
+        "parameters" : [ {
+          "name" : "region",
+          "in" : "path",
+          "description" : "Region (e.g. 'by.bsu')",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "lang",
+          "in" : "query",
+          "description" : "Language to use in translated content",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/CampaignsResponse"
+            }
+          },
+          "default" : {
+            "description" : "Error",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "x-swagger-router-controller" : "enrollment"
+    },
+    "/search/{region}/{campaign}/exams" : {
+      "get" : {
+        "description" : "Returns exams for the campaign",
+        "operationId" : "exams",
+        "parameters" : [ {
+          "name" : "region",
+          "in" : "path",
+          "description" : "Region (e.g. 'by.bsu')",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "campaign",
+          "in" : "path",
+          "description" : "Campaign (e.g. '2015db4' for day budget bachelor in 2015)",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "lang",
+          "in" : "query",
+          "description" : "Language to use in translated content",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/ExamsResponse"
+            }
+          },
+          "default" : {
+            "description" : "Error",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "x-swagger-router-controller" : "enrollment"
+    },
+    "/search/{region}/{campaign}/thresholds" : {
+      "get" : {
+        "description" : "Returns list of thresholds for the campaign. Use either page option or position = centered with gradeTotal.",
+        "operationId" : "thresholds",
+        "parameters" : [ {
+          "name" : "region",
+          "in" : "path",
+          "description" : "Region (e.g. 'by.bsu')",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "campaign",
+          "in" : "path",
+          "description" : "Campaign (e.g. '2015db4' for day budget bachelor in 2015)",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "suite",
+          "in" : "query",
+          "description" : "Exam suite  (e.g.'mathematics')",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "gradeTotal",
+          "in" : "query",
+          "description" : "Sum of exam mark's grades",
+          "required" : false,
+          "type" : "integer"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Search results page",
+          "required" : false,
+          "type" : "integer"
+        }, {
+          "name" : "centered",
+          "in" : "query",
+          "description" : "Position the result page to total grade",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "lang",
+          "in" : "query",
+          "description" : "Language to use in translated content",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/ThresholdsResponse"
+            }
+          },
+          "default" : {
+            "description" : "Error",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "x-swagger-router-controller" : "enrollment"
+    },
+    "/search/{region}/{campaign}/thresholds/{thresholdIds}" : {
+      "get" : {
+        "description" : "Provide details on the given thresholds",
+        "operationId" : "threshold",
+        "parameters" : [ {
+          "name" : "region",
+          "in" : "path",
+          "description" : "Region (e.g. 'by.bsu')",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "campaign",
+          "in" : "path",
+          "description" : "Campaign (e.g. '2015db4' for day budget bachelor in 2015)",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "suite",
+          "in" : "query",
+          "description" : "Exam suite  (e.g.'mathematics')",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "thresholdIds",
+          "in" : "path",
+          "description" : "Threshold / Speciality id (e.g. 'web'), either one item or semi colon (;) separated list",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "lang",
+          "in" : "query",
+          "description" : "Language to use in translated content",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/ThresholdFullResponse"
+            }
+          },
+          "default" : {
+            "description" : "Error",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "x-swagger-router-controller" : "enrollment"
+    },
+    "/swagger" : {
+      "x-swagger-pipe" : "swagger_raw"
+    }
+  },
+  "securityDefinitions" : {
+    "APIKeyHeader" : {
+      "description" : "JSON Web Token (JWT) obtained from auth endpoint.",
+      "type" : "apiKey",
+      "name" : "Authorization",
+      "in" : "header"
+    }
+  },
+  "definitions" : {
+    "Lang" : {
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "Lang identifier"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "Lang name in native"
+        },
+        "default" : {
+          "type" : "boolean",
+          "description" : "consider to set up this lang as default (optional param)"
+        }
+      }
+    },
+    "LangsResponse" : {
+      "properties" : {
+        "items" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Lang"
+          }
+        }
+      }
+    },
+    "Region" : {
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "Identifier, domain zone for a country, or university by reverse url (e.g. 'by.bsu')"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "Region name translated in given lang"
+        },
+        "detailsUrl" : {
+          "type" : "string",
+          "description" : "URL to link for further details of region"
+        },
+        "default" : {
+          "type" : "boolean",
+          "description" : "consider to set up this region as default   (optional param)"
+        }
+      }
+    },
+    "RegionsResponse" : {
+      "properties" : {
+        "items" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Region"
+          }
+        }
+      }
+    },
+    "CampaignsResponse" : {
+      "properties" : {
+        "items" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Campaign"
+          }
+        }
+      }
+    },
+    "Campaign" : {
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "Campaign identifier (e.g. '2015db4')"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "Campaign basic name (e.g. 'day budget')"
+        },
+        "year" : {
+          "type" : "integer",
+          "description" : "Campaign year (e.g. '2015')"
+        },
+        "examsCount" : {
+          "type" : "integer",
+          "description" : "Number of exams that is issued for this campaign  (e.g. '3')"
+        },
+        "detailsUrl" : {
+          "type" : "string",
+          "description" : "URL to link for further details"
+        },
+        "default" : {
+          "type" : "boolean",
+          "description" : "consider to set up this campaign as default  (optional param)"
+        }
+      }
+    },
+    "DefaultsResponse" : {
+      "properties" : {
+        "langs" : {
+          "type" : "array",
+          "description" : "Langs with the only default",
+          "items" : {
+            "$ref" : "#/definitions/Lang"
+          }
+        },
+        "regions" : {
+          "type" : "array",
+          "description" : "Regions with the only default, listed in the default lang",
+          "items" : {
+            "$ref" : "#/definitions/Region"
+          }
+        },
+        "campaigns" : {
+          "type" : "array",
+          "description" : "Campaigns corresponds to the default  lang and region",
+          "items" : {
+            "$ref" : "#/definitions/Campaign"
+          }
+        }
+      }
+    },
+    "ExamsResponse" : {
+      "properties" : {
+        "items" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Exam"
+          }
+        },
+        "suites" : {
+          "type" : "array",
+          "description" : "Compatible exams grouped in  suites",
+          "items" : {
+            "$ref" : "#/definitions/Suite"
+          }
+        }
+      }
+    },
+    "Exam" : {
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "Identifier of the exam (e.g. 'math')"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "Exam name translated in given language"
+        },
+        "obligation" : {
+          "type" : "string",
+          "description" : "If the exam needs to be marked as checked to pass"
+        },
+        "generalization" : {
+          "type" : "string",
+          "description" : "If the exam is actual, or the generalized (contains group of exams, e.g. 'nativelang')"
+        },
+        "passingPlace" : {
+          "type" : "string",
+          "description" : "Where the exam supposed to be passed"
+        },
+        "popularity" : {
+          "type" : "integer",
+          "description" : "Exams popularity to be used for sorting exams"
+        },
+        "parentExam" : {
+          "type" : "string",
+          "description" : "If the exam is actual but his parent exams is generalized (e.g. 'russian' to 'nativelang')"
+        }
+      }
+    },
+    "Suite" : {
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "Identifier of the suite"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "Suite name"
+        },
+        "exams" : {
+          "type" : "array",
+          "description" : "Exams for this suite",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "ThresholdsResponse" : {
+      "allOf" : [ {
+        "properties" : {
+          "page" : {
+            "type" : "integer",
+            "description" : "Current page of the search response"
+          },
+          "pageCount" : {
+            "type" : "integer",
+            "description" : "Total pages in the search response"
+          },
+          "isCentered" : {
+            "type" : "boolean",
+            "description" : "If the current response is centered to the given user grade"
+          },
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/Threshold"
+            }
+          }
+        }
+      } ]
+    },
+    "ThresholdFullResponse" : {
+      "properties" : {
+        "items" : {
+          "$ref" : "#/definitions/RequestLines"
+        }
+      }
+    },
+    "Threshold" : {
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "Identifier of the speciality"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "Speciality name"
+        },
+        "universityName" : {
+          "type" : "string"
+        },
+        "universityShortName" : {
+          "type" : "string"
+        },
+        "departmentName" : {
+          "type" : "string"
+        },
+        "departmentShortName" : {
+          "type" : "string"
+        },
+        "detailsUrl" : {
+          "type" : "string",
+          "description" : "URL to link for further details"
+        },
+        "threshold" : {
+          "type" : "number",
+          "description" : "Actual threshold level that needed to be enrolled to the given speciality"
+        },
+        "chance" : {
+          "type" : "number",
+          "description" : "'Chances to be enrolled, that may be depicted as a certain color, this depends on user total grades passed as the request'"
+        }
+      }
+    },
+    "RequestLines" : {
+      "properties" : {
+        "rows" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/RequestLine"
+          }
+        },
+        "columns" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/RequestLines_columns"
+          }
+        }
+      }
+    },
+    "RequestLine" : {
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "items" : {
+          "type" : "array",
+          "items" : {
+            "type" : "number"
+          }
+        }
+      }
+    },
+    "ErrorResponse" : {
+      "required" : [ "message" ],
+      "properties" : {
+        "message" : {
+          "type" : "string"
+        }
+      }
+    },
+    "RequestLines_columns" : {
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      }
+    }
+  },
+  "parameters" : {
+    "langParam" : {
+      "name" : "lang",
+      "in" : "query",
+      "description" : "Language to use in translated content",
+      "required" : false,
+      "type" : "string"
+    },
+    "regionParam" : {
+      "name" : "region",
+      "in" : "path",
+      "description" : "Region (e.g. 'by.bsu')",
+      "required" : true,
+      "type" : "string"
+    },
+    "campaignParam" : {
+      "name" : "campaign",
+      "in" : "path",
+      "description" : "Campaign (e.g. '2015db4' for day budget bachelor in 2015)",
+      "required" : true,
+      "type" : "string"
+    }
+  }
+}

@@ -1,0 +1,440 @@
+swagger: "2.0"
+info:
+  version: "0.48.4"
+  title: Enrollment API
+  
+securityDefinitions:
+  APIKeyHeader:
+    type: apiKey
+    in: header
+    name: Authorization
+    description: "JSON Web Token (JWT) obtained from auth endpoint."
+    
+security:
+  - APIKeyHeader: []    
+  
+host: api.pangramia.com
+# basePath prefixes all resource paths 
+basePath: /enroll/v1
+schemes:
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /:
+    x-swagger-router-controller: enrollment
+    get:
+      description: Returns  langs with default lang, regions with default region, and campaigns for default region. Everything is listed in default lang. This REST method is to speed-up js client communication.
+      operationId: defaults
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/DefaultsResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /langs:
+    x-swagger-router-controller: enrollment
+    get:
+      description: Returns language list in which content is available
+      operationId: langs
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/LangsResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  
+  /regions:
+    x-swagger-router-controller: enrollment
+    get:
+      description: Returns available regions (e.g. countries, universities)
+      operationId: regions
+      parameters:
+        - $ref: "#/parameters/langParam"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/RegionsResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"  
+            
+  /search/{region}:
+    x-swagger-router-controller: enrollment
+    get:
+      description: Returns available campaigns for a specific region
+      operationId: campaigns
+      parameters:
+        - $ref: "#/parameters/regionParam"
+        - $ref: "#/parameters/langParam"
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/CampaignsResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"  
+            
+  /search/{region}/{campaign}/exams:
+    x-swagger-router-controller: enrollment
+    get:
+      description: Returns exams for the campaign
+      operationId: exams
+      parameters:
+        - $ref: "#/parameters/regionParam"
+        - $ref: "#/parameters/campaignParam"
+        - $ref: "#/parameters/langParam"
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ExamsResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"    
+            
+  /search/{region}/{campaign}/thresholds:
+    x-swagger-router-controller: enrollment
+    get:
+      description: Returns list of thresholds for the campaign. Use either page option or position = centered with gradeTotal.
+      operationId: thresholds
+      parameters:
+        - $ref: "#/parameters/regionParam"
+        - $ref: "#/parameters/campaignParam"
+        - name: suite
+          in: query
+          description: Exam suite  (e.g.'mathematics')
+          required: false
+          type: string        
+        - name: gradeTotal
+          in: query
+          description: Sum of exam mark's grades
+          required: false
+          type: integer   
+        - name: page
+          in: query
+          description: Search results page
+          required: false
+          type: integer    
+        - name: centered
+          in: query
+          description: Position the result page to total grade 
+          required: false
+          type: string
+          # enum: ['true']
+        - $ref: "#/parameters/langParam"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ThresholdsResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"     
+            
+  /search/{region}/{campaign}/thresholds/{thresholdIds}:
+    x-swagger-router-controller: enrollment
+    get:
+      description: Provide details on the given thresholds
+      operationId: threshold
+      parameters:
+        - $ref: "#/parameters/regionParam"
+        - $ref: "#/parameters/campaignParam"
+        - name: suite
+          in: query
+          description: Exam suite  (e.g.'mathematics')
+          required: false
+          type: string      
+        - name: thresholdIds
+          in: path
+          description: Threshold / Speciality id (e.g. 'web'), either one item or semi colon (;) separated list
+          required: true
+          type: string  
+        - $ref: "#/parameters/langParam" 
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ThresholdFullResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse" 
+              
+  /swagger:
+    x-swagger-pipe: swagger_raw
+    
+# complex objects have schema definitions
+parameters:
+  langParam:
+       name: lang
+       in: query
+       description: Language to use in translated content
+       required: false
+       type: string
+  regionParam:     
+       name: region
+       in: path
+       description: Region (e.g. 'by.bsu')
+       required: true
+       type: string
+  campaignParam:     
+          name: campaign
+          in: path
+          description: Campaign (e.g. '2015db4' for day budget bachelor in 2015)
+          required: true
+          type: string         
+
+definitions:
+  Lang:
+    properties:
+        id:
+          type: string
+          description: Lang identifier
+        name:
+          type: string 
+          description: Lang name in native
+        default:
+          type: boolean
+          description: consider to set up this lang as default (optional param)
+          
+
+  LangsResponse:
+    properties:
+      items:
+        type: array
+        items:
+          $ref: "#/definitions/Lang"
+        
+  Region:
+    properties:
+        id:
+          type: string
+          description: Identifier, domain zone for a country, or university by reverse url (e.g. 'by.bsu')
+        name:
+          type: string 
+          description: Region name translated in given lang
+        detailsUrl:
+          type: string 
+          description: URL to link for further details of region
+        default:
+          type: boolean
+          description: consider to set up this region as default   (optional param) 
+ 
+  RegionsResponse:
+    properties:
+     items:
+        type: array
+        items:
+          $ref: "#/definitions/Region"  
+          
+  CampaignsResponse:
+    properties:
+        items:
+          type: array
+          items:
+            $ref: "#/definitions/Campaign" 
+
+  Campaign:
+    properties:
+        id:
+          type: string
+          description: Campaign identifier (e.g. '2015db4')
+        name:
+          type: string 
+          description: Campaign basic name (e.g. 'day budget')
+        year:
+          type: integer 
+          description: Campaign year (e.g. '2015')   
+        examsCount:
+          type: integer 
+          description: Number of exams that is issued for this campaign  (e.g. '3')  
+        detailsUrl:
+          type: string 
+          description: URL to link for further details 
+        default:
+          type: boolean
+          description: consider to set up this campaign as default  (optional param)   
+  
+  DefaultsResponse:
+    properties:
+      langs:  
+        type: array
+        description: Langs with the only default
+        items:
+          $ref: "#/definitions/Lang" 
+      regions:  
+        type: array
+        description: Regions with the only default, listed in the default lang
+        items:
+          $ref: "#/definitions/Region"  
+      campaigns:
+        type: array
+        description: Campaigns corresponds to the default  lang and region 
+        items:
+          $ref: "#/definitions/Campaign"  
+          
+          
+  ExamsResponse:
+    properties:
+      items:
+        type: array
+        items:
+          $ref: "#/definitions/Exam" 
+      suites:
+          type: array
+          description: Compatible exams grouped in  suites
+          items:
+            $ref: "#/definitions/Suite"       
+  Exam:
+    properties:
+        id:
+          type: string
+          description: Identifier of the exam (e.g. 'math')
+        name:
+          type: string 
+          description: Exam name translated in given language
+        obligation:
+          type: string 
+          description: If the exam needs to be marked as checked to pass
+          # enum: ['MANDATORY_FOR_ALL', 'ADDITIONAL_NON_COUNTED', 'USER_CHOICE']
+        generalization:
+          type: string
+          description: If the exam is actual, or the generalized (contains group of exams, e.g. 'nativelang')
+          # enum: ['REAL', 'GENERALIZED']
+        passingPlace:
+          type: string
+          description: Where the exam supposed to be passed
+          # enum: ['CENTRALIZED', 'IN_PLACE', 'SCHOOL']
+        popularity:
+          description: Exams popularity to be used for sorting exams
+          type: integer
+        parentExam:
+          description: If the exam is actual but his parent exams is generalized (e.g. 'russian' to 'nativelang')
+          type: string
+        hidden: 
+          description: If the exam needs to be omitted from the exam choose list
+          type: boolean
+  
+  Suite:
+    properties:
+        id:
+          type: string
+          description: Identifier of the suite 
+        name:
+          type: string 
+          description: Suite name
+        exams:
+          type: array
+          description: Exams for this suite
+          items:
+            type: string
+ 
+  ThresholdsResponse:
+    allOf:
+      - properties:
+          page: 
+            type: integer
+            description: Current page of the search response
+          pageCount:
+            type: integer
+            description: Total pages in the search response
+          isCentered: 
+            type: boolean  
+            description: If the current response is centered to the given user grade
+          items:
+            type: array
+            items:
+              $ref: "#/definitions/Threshold"    
+              
+  ThresholdFullResponse:
+    properties:
+        items:
+          $ref: "#/definitions/RequestLines"    
+      
+  Threshold:
+    properties:
+        id:
+          type: string
+          description: Identifier of the speciality
+        name:
+          type: string 
+          description: Speciality name
+        universityName:
+          type: string 
+        universityShortName:
+          type: string 
+        departmentName:
+          type: string 
+        departmentShortName:
+          type: string   
+        detailsUrl:
+          type: string 
+          description: URL to link for further details 
+        threshold:
+          type: number  
+          description: Actual threshold level that needed to be enrolled to the given speciality
+        chance:
+          type: number
+          description: '''Chances to be enrolled, that may be depicted as a certain color, this 
+          depends on user total grades passed as the request'''
+          
+  RequestLines:
+    properties:
+        rows:
+          type: array
+          items:
+            $ref: "#/definitions/RequestLine" 
+        columns:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+          
+  RequestLine:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      items:
+        type: array   
+        items:
+          $ref: "#/definitions/RequestLineItem" 
+        
+  RequestLineItem: 
+    properties:
+      value:
+        type: number
+      enrollLevel:
+        type: number
+        description: If the given request cell with the threshold value (e.g. 380) is passed well for enrollment (1 value), semipassed (0), or out of passing (-1). This may be used to colorize threshold tables, so each user may see if the given cell (with certain threshold value)  still pass enrollment minimal requirements.
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string

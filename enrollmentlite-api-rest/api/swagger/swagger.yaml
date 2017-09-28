@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.48.5"
+  version: "0.48.6"
   title: Enrollment API
   
 securityDefinitions:
@@ -122,12 +122,12 @@ paths:
         - name: suite
           in: query
           description: Exam suite  (e.g.'mathematics')
-          required: false
+          required: true
           type: string        
         - name: gradeTotal
           in: query
           description: Sum of exam mark's grades
-          required: false
+          required: true
           type: integer   
         - name: page
           in: query

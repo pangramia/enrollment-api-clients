@@ -105,6 +105,10 @@ export interface Exam {
      * If the exam is actual but his parent exams is generalized (e.g. 'russian' to 'nativelang')
      */
     "parentExam"?: string;
+    /**
+     * If the exam needs to be omitted from the exam choose list
+     */
+    "hidden"?: boolean;
 }
 
 
@@ -166,7 +170,19 @@ export interface RegionsResponse {
 export interface RequestLine {
     "id"?: string;
     "name"?: string;
-    "items"?: Array<number>;
+    "items"?: Array<RequestLineItem>;
+}
+
+
+export interface RequestLineItem {
+    /**
+     * Basically we provide either number, or empty values here
+     */
+    "value"?: string;
+    /**
+     * If the given request cell with the threshold value (e.g. 380) is passed well for enrollment (1 value), semipassed (0), or out of passing (-1). This may be used to colorize threshold tables, so each user may see if the given cell (with certain threshold value)  still pass enrollment minimal requirements.
+     */
+    "enrollLevel"?: number;
 }
 
 
@@ -408,7 +424,7 @@ export const DefaultApiFetchParamCreactor = {
      * @param centered Position the result page to total grade
      * @param lang Language to use in translated content
      */
-    thresholds(params: {  region: string; campaign: string; suite?: string; gradeTotal?: number; page?: number; centered?: string; lang?: string; }): FetchArgs {
+    thresholds(params: {  region: string; campaign: string; suite: string; gradeTotal: number; page?: number; centered?: string; lang?: string; }): FetchArgs {
         // verify required parameter "region" is set
         if (params["region"] == null) {
             throw new Error("Missing required parameter region when calling thresholds");
@@ -416,6 +432,14 @@ export const DefaultApiFetchParamCreactor = {
         // verify required parameter "campaign" is set
         if (params["campaign"] == null) {
             throw new Error("Missing required parameter campaign when calling thresholds");
+        }
+        // verify required parameter "suite" is set
+        if (params["suite"] == null) {
+            throw new Error("Missing required parameter suite when calling thresholds");
+        }
+        // verify required parameter "gradeTotal" is set
+        if (params["gradeTotal"] == null) {
+            throw new Error("Missing required parameter gradeTotal when calling thresholds");
         }
         const baseUrl = `/search/{region}/{campaign}/thresholds`
             .replace(`{${"region"}}`, `${ params.region }`)
@@ -554,7 +578,7 @@ export const DefaultApiFp = {
      * @param centered Position the result page to total grade
      * @param lang Language to use in translated content
      */
-    thresholds(params: { region: string; campaign: string; suite?: string; gradeTotal?: number; page?: number; centered?: string; lang?: string;  }): (fetch?: FetchAPI, basePath?: string) => Promise<ThresholdsResponse> {
+    thresholds(params: { region: string; campaign: string; suite: string; gradeTotal: number; page?: number; centered?: string; lang?: string;  }): (fetch?: FetchAPI, basePath?: string) => Promise<ThresholdsResponse> {
         const fetchArgs = DefaultApiFetchParamCreactor.thresholds(params);
         return (fetch: FetchAPI = FetchImpl, basePath: string = BasePath) => {
             return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
@@ -629,7 +653,7 @@ export class DefaultApi extends BaseAPI {
      * @param centered Position the result page to total grade
      * @param lang Language to use in translated content
      */
-    thresholds(params: {  region: string; campaign: string; suite?: string; gradeTotal?: number; page?: number; centered?: string; lang?: string; }) {
+    thresholds(params: {  region: string; campaign: string; suite: string; gradeTotal: number; page?: number; centered?: string; lang?: string; }) {
         return DefaultApiFp.thresholds(params)(this.fetch, this.basePath);
     }
 };
@@ -696,7 +720,7 @@ export const DefaultApiFactory = function (fetch: FetchAPI = FetchImpl, basePath
          * @param centered Position the result page to total grade
          * @param lang Language to use in translated content
          */
-        thresholds(params: {  region: string; campaign: string; suite?: string; gradeTotal?: number; page?: number; centered?: string; lang?: string; }) {
+        thresholds(params: {  region: string; campaign: string; suite: string; gradeTotal: number; page?: number; centered?: string; lang?: string; }) {
             return DefaultApiFp.thresholds(params)(fetch, basePath);
         },
     }

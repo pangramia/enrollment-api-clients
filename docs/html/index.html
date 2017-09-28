@@ -8,7 +8,10 @@
 <body>
 <div class="container">
     <h1>Enrollment API</h1>
-    <p class="sw-info">Base URL: <span class="sw-info-basePath">/enroll/v1</span>, Version: <span class="sw-info-version">0.48.3</span></p>
+    <p class="sw-info">
+        Base URL: <span class="sw-info-basePath">/enroll/v1</span>,
+        Version: <span class="sw-info-version">0.48.3</span>
+    </p>
     <p></p>
     
         <div id="sw-default-consumes" class="sw-default-value">
@@ -164,6 +167,7 @@
                         <p>Returns  langs with default lang, regions with default region, and campaigns for default region. Everything is listed in default lang. This REST method is to speed-up js client communication.</p>
             
                     </section>
+            
                     
                     
                         <section class="sw-responses">
@@ -217,7 +221,8 @@
                             </dl>
                         </section>
                 </div>
-            </div>    
+            </div>
+        
         <span id="path--langs"></span>
             <div id="operation--langs-get" class="swagger--panel-operation-get panel">
                 <div class="panel-heading">
@@ -229,6 +234,7 @@
                         <p>Returns language list in which content is available</p>
             
                     </section>
+            
                     
                     
                         <section class="sw-responses">
@@ -282,7 +288,8 @@
                             </dl>
                         </section>
                 </div>
-            </div>    
+            </div>
+        
         <span id="path--regions"></span>
             <div id="operation--regions-get" class="swagger--panel-operation-get panel">
                 <div class="panel-heading">
@@ -294,6 +301,7 @@
                         <p>Returns available regions (e.g. countries, universities)</p>
             
                     </section>
+            
                     
                         <section class="sw-request-params">
                             <table class="table">
@@ -310,6 +318,7 @@
                                         <tr>
                                             <td>
                                                 lang
+                                            </td>
                                             <td><p>Language to use in translated content</p>
                                         </td>
                                             <td>query</td>
@@ -376,7 +385,8 @@
                             </dl>
                         </section>
                 </div>
-            </div>    
+            </div>
+        
         <span id="path--search--region-"></span>
             <div id="operation--search--region--get" class="swagger--panel-operation-get panel">
                 <div class="panel-heading">
@@ -388,6 +398,7 @@
                         <p>Returns available campaigns for a specific region</p>
             
                     </section>
+            
                     
                         <section class="sw-request-params">
                             <table class="table">
@@ -404,6 +415,7 @@
                                         <tr>
                                             <td>
                                                 region
+                                            </td>
                                             <td><p>Region (e.g. &#39;by.bsu&#39;)</p>
                                         </td>
                                             <td>path</td>
@@ -419,6 +431,7 @@
                                         <tr>
                                             <td>
                                                 lang
+                                            </td>
                                             <td><p>Language to use in translated content</p>
                                         </td>
                                             <td>query</td>
@@ -485,7 +498,8 @@
                             </dl>
                         </section>
                 </div>
-            </div>    
+            </div>
+        
         <span id="path--search--region---campaign--exams"></span>
             <div id="operation--search--region---campaign--exams-get" class="swagger--panel-operation-get panel">
                 <div class="panel-heading">
@@ -497,6 +511,7 @@
                         <p>Returns exams for the campaign</p>
             
                     </section>
+            
                     
                         <section class="sw-request-params">
                             <table class="table">
@@ -513,6 +528,7 @@
                                         <tr>
                                             <td>
                                                 region
+                                            </td>
                                             <td><p>Region (e.g. &#39;by.bsu&#39;)</p>
                                         </td>
                                             <td>path</td>
@@ -528,6 +544,7 @@
                                         <tr>
                                             <td>
                                                 campaign
+                                            </td>
                                             <td><p>Campaign (e.g. &#39;2015db4&#39; for day budget bachelor in 2015)</p>
                                         </td>
                                             <td>path</td>
@@ -543,6 +560,7 @@
                                         <tr>
                                             <td>
                                                 lang
+                                            </td>
                                             <td><p>Language to use in translated content</p>
                                         </td>
                                             <td>query</td>
@@ -609,7 +627,8 @@
                             </dl>
                         </section>
                 </div>
-            </div>    
+            </div>
+        
         <span id="path--search--region---campaign--thresholds"></span>
             <div id="operation--search--region---campaign--thresholds-get" class="swagger--panel-operation-get panel">
                 <div class="panel-heading">
@@ -621,6 +640,7 @@
                         <p>Returns list of thresholds for the campaign. Use either page option or position = centered with gradeTotal.</p>
             
                     </section>
+            
                     
                         <section class="sw-request-params">
                             <table class="table">
@@ -637,6 +657,7 @@
                                         <tr>
                                             <td>
                                                 region
+                                            </td>
                                             <td><p>Region (e.g. &#39;by.bsu&#39;)</p>
                                         </td>
                                             <td>path</td>
@@ -652,6 +673,7 @@
                                         <tr>
                                             <td>
                                                 campaign
+                                            </td>
                                             <td><p>Campaign (e.g. &#39;2015db4&#39; for day budget bachelor in 2015)</p>
                                         </td>
                                             <td>path</td>
@@ -667,6 +689,7 @@
                                         <tr>
                                             <td>
                                                 suite
+                                            </td>
                                             <td><p>Exam suite  (e.g.&#39;mathematics&#39;)</p>
                                         </td>
                                             <td>query</td>
@@ -681,6 +704,7 @@
                                         <tr>
                                             <td>
                                                 gradeTotal
+                                            </td>
                                             <td><p>Sum of exam mark&#39;s grades</p>
                                         </td>
                                             <td>query</td>
@@ -695,6 +719,7 @@
                                         <tr>
                                             <td>
                                                 page
+                                            </td>
                                             <td><p>Search results page</p>
                                         </td>
                                             <td>query</td>
@@ -709,6 +734,7 @@
                                         <tr>
                                             <td>
                                                 centered
+                                            </td>
                                             <td><p>Position the result page to total grade</p>
                                         </td>
                                             <td>query</td>
@@ -723,6 +749,7 @@
                                         <tr>
                                             <td>
                                                 lang
+                                            </td>
                                             <td><p>Language to use in translated content</p>
                                         </td>
                                             <td>query</td>
@@ -789,7 +816,8 @@
                             </dl>
                         </section>
                 </div>
-            </div>    
+            </div>
+        
         <span id="path--search--region---campaign--thresholds--thresholdIds-"></span>
             <div id="operation--search--region---campaign--thresholds--thresholdIds--get" class="swagger--panel-operation-get panel">
                 <div class="panel-heading">
@@ -801,6 +829,7 @@
                         <p>Provide details on the given thresholds</p>
             
                     </section>
+            
                     
                         <section class="sw-request-params">
                             <table class="table">
@@ -817,6 +846,7 @@
                                         <tr>
                                             <td>
                                                 region
+                                            </td>
                                             <td><p>Region (e.g. &#39;by.bsu&#39;)</p>
                                         </td>
                                             <td>path</td>
@@ -832,6 +862,7 @@
                                         <tr>
                                             <td>
                                                 campaign
+                                            </td>
                                             <td><p>Campaign (e.g. &#39;2015db4&#39; for day budget bachelor in 2015)</p>
                                         </td>
                                             <td>path</td>
@@ -847,6 +878,7 @@
                                         <tr>
                                             <td>
                                                 suite
+                                            </td>
                                             <td><p>Exam suite  (e.g.&#39;mathematics&#39;)</p>
                                         </td>
                                             <td>query</td>
@@ -861,6 +893,7 @@
                                         <tr>
                                             <td>
                                                 thresholdIds
+                                            </td>
                                             <td><p>Threshold / Speciality id (e.g. &#39;web&#39;), either one item or semi colon (;) separated list</p>
                                         </td>
                                             <td>path</td>
@@ -876,6 +909,7 @@
                                         <tr>
                                             <td>
                                                 lang
+                                            </td>
                                             <td><p>Language to use in translated content</p>
                                         </td>
                                             <td>query</td>
@@ -942,7 +976,8 @@
                             </dl>
                         </section>
                 </div>
-            </div>    
+            </div>
+        
         <span id="path--swagger"></span>
     
         <h2>Parameter definitions</h2>
@@ -962,6 +997,7 @@
                         <td><a name="/parameters/langParam"></a>langParam</td>
                     <td>
                         lang
+                    </td>
                     <td><p>Language to use in translated content</p>
                 </td>
                     <td>query</td>
@@ -977,6 +1013,7 @@
                         <td><a name="/parameters/regionParam"></a>regionParam</td>
                     <td>
                         region
+                    </td>
                     <td><p>Region (e.g. &#39;by.bsu&#39;)</p>
                 </td>
                     <td>path</td>
@@ -993,6 +1030,7 @@
                         <td><a name="/parameters/campaignParam"></a>campaignParam</td>
                     <td>
                         campaign
+                    </td>
                     <td><p>Campaign (e.g. &#39;2015db4&#39; for day budget bachelor in 2015)</p>
                 </td>
                     <td>path</td>

@@ -16,3 +16,4 @@ export * from './suite';
 export * from './threshold';
 export * from './thresholdFullResponse';
 export * from './thresholdsResponse';
+export * from './versionResponse';

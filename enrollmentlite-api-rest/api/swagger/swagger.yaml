@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.48.6"
+  version: "0.48.8"
   title: Enrollment API
   
 securityDefinitions:
@@ -179,7 +179,21 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse" 
-              
+  /version:
+    x-swagger-router-controller: enrollment
+    get:
+      description: Provide implementation version of the  deployed app. This may used for internal or debuggig purposes.
+      operationId: version
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/VersionResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"       
+
   /swagger:
     x-swagger-pipe: swagger_raw
     
@@ -206,6 +220,7 @@ parameters:
 
 definitions:
   Lang:
+    required: [id, name]
     properties:
         id:
           type: string
@@ -226,6 +241,7 @@ definitions:
           $ref: "#/definitions/Lang"
         
   Region:
+    required: [id, name]
     properties:
         id:
           type: string
@@ -255,6 +271,7 @@ definitions:
             $ref: "#/definitions/Campaign" 
 
   Campaign:
+    required: [id, name]
     properties:
         id:
           type: string
@@ -306,6 +323,7 @@ definitions:
           items:
             $ref: "#/definitions/Suite"       
   Exam:
+    required: [id, name]
     properties:
         id:
           type: string
@@ -433,6 +451,13 @@ definitions:
       enrollLevel:
         type: number
         description: If the given request cell with the threshold value (e.g. 380) is passed well for enrollment (1 value), semipassed (0), or out of passing (-1). This may be used to colorize threshold tables, so each user may see if the given cell (with certain threshold value)  still pass enrollment minimal requirements.
+  
+  VersionResponse:
+    properties:
+        version:
+          type: string
+          description: internal version
+        
   ErrorResponse:
     required:
       - message

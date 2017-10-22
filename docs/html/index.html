@@ -10,7 +10,7 @@
     <h1>Enrollment API</h1>
     <p class="sw-info">
         Base URL: <span class="sw-info-basePath">/enroll/v1</span>,
-        Version: <span class="sw-info-version">0.48.3</span>
+        Version: <span class="sw-info-version">0.48.8</span>
     </p>
     <p></p>
     
@@ -110,6 +110,17 @@
                             </td>
                         <td>
                             <a href="#operation--search--region---campaign--thresholds--thresholdIds--get">GET</a>
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                            <td class="swagger--summary-path" rowspan="1">
+                                <a href="#path--version">/version</a>
+                            </td>
+                        <td>
+                            <a href="#operation--version-get">GET</a>
                         </td>
                         <td>
                             
@@ -699,6 +710,7 @@
                                         
                                             </td>
                                             <td>
+                                                    <span class="json-property-required"></span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -714,6 +726,7 @@
                                         
                                             </td>
                                             <td>
+                                                    <span class="json-property-required"></span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -979,6 +992,73 @@
             </div>
         
         <span id="path--swagger"></span>
+        
+        <span id="path--version"></span>
+            <div id="operation--version-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary"></div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/version</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Provide implementation version of the  deployed app. This may used for internal or debuggig purposes.</p>
+            
+                    </section>
+            
+                    
+                    
+                        <section class="sw-responses">
+                                <p><a href="#sw-default-produces">Uses default content-types: </a>
+                                    <span class="label label-default">application/json</span> 
+                                </p>
+                            
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Success</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/VersionResponse">VersionResponse</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-default">
+                                        default 
+                                    
+                                    </dt>
+                                    <dd class="sw-response-default">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Error</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/ErrorResponse">ErrorResponse</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
     
         <h2>Parameter definitions</h2>
         <table id="table-parameter-definitions" class="table">
@@ -1071,6 +1151,7 @@
                                                 <span class="json-property-type">string</span>
                                                 <span class="json-property-range" title="Value limits"></span>
                                                 
+                                                    <span class="json-property-required"></span>
                                             </dt>
                                             <dd>
                                                 <p>Campaign identifier (e.g. &#39;2015db4&#39;)</p>
@@ -1085,6 +1166,7 @@
                                                 <span class="json-property-type">string</span>
                                                 <span class="json-property-range" title="Value limits"></span>
                                                 
+                                                    <span class="json-property-required"></span>
                                             </dt>
                                             <dd>
                                                 <p>Campaign basic name (e.g. &#39;day budget&#39;)</p>
@@ -1332,6 +1414,7 @@
                                                 <span class="json-property-type">string</span>
                                                 <span class="json-property-range" title="Value limits"></span>
                                                 
+                                                    <span class="json-property-required"></span>
                                             </dt>
                                             <dd>
                                                 <p>Identifier of the exam (e.g. &#39;math&#39;)</p>
@@ -1346,6 +1429,7 @@
                                                 <span class="json-property-type">string</span>
                                                 <span class="json-property-range" title="Value limits"></span>
                                                 
+                                                    <span class="json-property-required"></span>
                                             </dt>
                                             <dd>
                                                 <p>Exam name translated in given language</p>
@@ -1419,6 +1503,20 @@
                                             </dt>
                                             <dd>
                                                 <p>If the exam is actual but his parent exams is generalized (e.g. &#39;russian&#39; to &#39;nativelang&#39;)</p>
+                                
+                                                <div class="json-inner-schema">
+                                                    
+                                                </div>
+                                            </dd>
+                                            <dt data-property-name="hidden">
+                                                <span class="json-property-name">hidden:</span>
+                                                
+                                                <span class="json-property-type">boolean</span>
+                                                <span class="json-property-range" title="Value limits"></span>
+                                                
+                                            </dt>
+                                            <dd>
+                                                <p>If the exam needs to be omitted from the exam choose list</p>
                                 
                                                 <div class="json-inner-schema">
                                                     
@@ -1511,6 +1609,7 @@
                                                 <span class="json-property-type">string</span>
                                                 <span class="json-property-range" title="Value limits"></span>
                                                 
+                                                    <span class="json-property-required"></span>
                                             </dt>
                                             <dd>
                                                 <p>Lang identifier</p>
@@ -1525,6 +1624,7 @@
                                                 <span class="json-property-type">string</span>
                                                 <span class="json-property-range" title="Value limits"></span>
                                                 
+                                                    <span class="json-property-required"></span>
                                             </dt>
                                             <dd>
                                                 <p>Lang name in native</p>
@@ -1611,6 +1711,7 @@
                                                 <span class="json-property-type">string</span>
                                                 <span class="json-property-range" title="Value limits"></span>
                                                 
+                                                    <span class="json-property-required"></span>
                                             </dt>
                                             <dd>
                                                 <p>Identifier, domain zone for a country, or university by reverse url (e.g. &#39;by.bsu&#39;)</p>
@@ -1625,6 +1726,7 @@
                                                 <span class="json-property-type">string</span>
                                                 <span class="json-property-range" title="Value limits"></span>
                                                 
+                                                    <span class="json-property-required"></span>
                                             </dt>
                                             <dd>
                                                 <p>Region name translated in given lang</p>
@@ -1748,7 +1850,7 @@
                                             <dt data-property-name="items">
                                                 <span class="json-property-name">items:</span>
                                                 
-                                                <span class="json-property-type">number[]</span>
+                                                <span class="json-property-type">object[]</span>
                                                 <span class="json-property-range" title="Value limits"></span>
                                                 
                                             </dt>
@@ -1758,13 +1860,60 @@
                                                     
                                                                     <section class="json-schema-array-items">
                                                                         
-                                                                        <span class="json-property-type">number</span>
+                                                                        <span class="json-property-type">    <a class="json-schema-ref" href="#/definitions/RequestLineItem">RequestLineItem</a>
+                                                                        </span>
                                                                         <span class="json-property-range" title="Value limits"></span>
                                                                         
                                                                         <div class="json-inner-schema">
                                                                             
                                                                         </div>
                                                                     </section>                </div>
+                                            </dd>
+                                    </dl>
+                                </section>
+                    </div>
+                </div>        
+                <div id="definition-RequestLineItem" class="panel panel-definition">
+                        <div class="panel-heading">
+                                <h3 class="panel-title"><a name="/definitions/RequestLineItem"></a>RequestLineItem:
+                                    <span class="json-property-type">
+                <span class="json-property-type">object</span>
+                <span class="json-property-range" title="Value limits"></span>
+                
+                </span>
+                                </h3>
+                        </div>
+                    <div class="panel-body">
+                            
+                                <section class="json-schema-properties">
+                                    <dl>
+                                            <dt data-property-name="value">
+                                                <span class="json-property-name">value:</span>
+                                                
+                                                <span class="json-property-type">string</span>
+                                                <span class="json-property-range" title="Value limits"></span>
+                                                
+                                            </dt>
+                                            <dd>
+                                                <p>Basically we provide either number, or empty values here</p>
+                                
+                                                <div class="json-inner-schema">
+                                                    
+                                                </div>
+                                            </dd>
+                                            <dt data-property-name="enrollLevel">
+                                                <span class="json-property-name">enrollLevel:</span>
+                                                
+                                                <span class="json-property-type">number</span>
+                                                <span class="json-property-range" title="Value limits"></span>
+                                                
+                                            </dt>
+                                            <dd>
+                                                <p>If the given request cell with the threshold value (e.g. 380) is passed well for enrollment (1 value), semipassed (0), or out of passing (-1). This may be used to colorize threshold tables, so each user may see if the given cell (with certain threshold value)  still pass enrollment minimal requirements.</p>
+                                
+                                                <div class="json-inner-schema">
+                                                    
+                                                </div>
                                             </dd>
                                     </dl>
                                 </section>
@@ -2204,6 +2353,38 @@
                                                         </dl>
                                                     </section>
                                     </section>
+                                </section>
+                    </div>
+                </div>        
+                <div id="definition-VersionResponse" class="panel panel-definition">
+                        <div class="panel-heading">
+                                <h3 class="panel-title"><a name="/definitions/VersionResponse"></a>VersionResponse:
+                                    <span class="json-property-type">
+                <span class="json-property-type">object</span>
+                <span class="json-property-range" title="Value limits"></span>
+                
+                </span>
+                                </h3>
+                        </div>
+                    <div class="panel-body">
+                            
+                                <section class="json-schema-properties">
+                                    <dl>
+                                            <dt data-property-name="version">
+                                                <span class="json-property-name">version:</span>
+                                                
+                                                <span class="json-property-type">string</span>
+                                                <span class="json-property-range" title="Value limits"></span>
+                                                
+                                            </dt>
+                                            <dd>
+                                                <p>internal version</p>
+                                
+                                                <div class="json-inner-schema">
+                                                    
+                                                </div>
+                                            </dd>
+                                    </dl>
                                 </section>
                     </div>
                 </div>
